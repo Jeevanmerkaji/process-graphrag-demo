@@ -1,0 +1,109 @@
+# AI capability taxonomy
+#
+# A small, tool-independent taxonomy of what current AI methods can do. Process
+# requirements are matched against these capabilities, not against specific
+# products, so the mapping stays valid as tools change.
+#
+# maturity: how ready the capability is for productive use in engineering
+#   (high = proven off-the-shelf, medium = needs adaptation, low = research)
+
+capabilities:
+  - id: semantic_search
+    name: Semantic search and retrieval
+    category: Knowledge access
+    maturity: high
+    description: >
+      Find relevant documents, earlier cases, previous decisions or similar
+      parts by meaning rather than exact keywords, across large collections of
+      unstructured text (retrieval-augmented generation, embedding search).
+    keywords: [search, find, earlier, previous, similar, reuse, lessons learned, hard to find, look up]
+
+  - id: summarization
+    name: Summarization and consolidation
+    category: Knowledge access
+    maturity: high
+    description: >
+      Condense and consolidate information from many heterogeneous sources,
+      e-mails, reports and statements into one structured overview or decision summary.
+    keywords: [consolidate, collect, overview, summary, merge, different formats, status, package]
+
+  - id: information_extraction
+    name: Information extraction
+    category: Document understanding
+    maturity: high
+    description: >
+      Extract structured data fields from unstructured text such as e-mails,
+      free-text attachments, forms and reports, e.g. turning assessments into a table.
+    keywords: [extract, e-mail, free text, attachments, form, fields, structured]
+
+  - id: text_generation
+    name: Document drafting
+    category: Content generation
+    maturity: high
+    description: >
+      Draft reports, plans, notices and other documents from data and templates,
+      to be reviewed and finished by an engineer; reduce copy-paste and manual writing.
+    keywords: [write, draft, report, plan, written manually, copy-paste, template, documentation]
+
+  - id: compliance_checking
+    name: Rule and compliance checking
+    category: Decision support
+    maturity: medium
+    description: >
+      Check content against criteria, rules, checklists, standards or
+      regulations and flag deviations; support consistent interpretation of criteria.
+    keywords: [check, criteria, regulation, homologation, type approval, compliance, consistent, interpretation]
+
+  - id: impact_analysis
+    name: Dependency and impact analysis
+    category: Decision support
+    maturity: medium
+    description: >
+      Trace dependencies in product structures and knowledge graphs, e.g.
+      identify affected parts in the bill of materials and affected departments.
+    keywords: [affected, impact, dependencies, bill of materials, parts, trace, structure]
+
+  - id: anomaly_detection
+    name: Anomaly detection in measurement data
+    category: Data analysis
+    maturity: medium
+    description: >
+      Automatically detect unusual patterns and anomalies in large amounts of
+      time-series measurement and channel data from tests.
+    keywords: [anomalies, measurement data, channel data, signals, time series, analyse]
+
+  - id: surrogate_modeling
+    name: Surrogate models for simulation
+    category: Engineering AI
+    maturity: low
+    description: >
+      Machine-learning models that approximate simulation results in seconds,
+      enabling many more design variants than long solver run times allow.
+    keywords: [simulation, run times, variants, solver, predict, design space]
+
+  - id: geometry_preprocessing
+    name: Automated geometry and mesh preparation
+    category: Engineering AI
+    maturity: low
+    description: >
+      Automate CAD clean-up and meshing to prepare simulation models with less
+      manual pre-processing effort.
+    keywords: [meshing, mesh, cad, pre-processing, simulation model, geometry]
+
+  - id: generative_suggestion
+    name: Generative suggestion of engineering content
+    category: Content generation
+    maturity: medium
+    description: >
+      Propose candidate failure modes, causes, load cases or test cases based
+      on similar earlier designs, for expert review.
+    keywords: [failure modes, causes, load cases, suggest, propose, derive]
+
+  - id: action_tracking
+    name: Action tracking and monitoring agents
+    category: Process automation
+    maturity: medium
+    description: >
+      Monitor open actions, deadlines and statuses across several systems and
+      remind owners, so that open actions are followed up and not forgotten.
+    keywords: [track, open actions, follow up, forgotten, monitor, remind, deadlines]

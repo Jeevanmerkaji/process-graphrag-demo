@@ -1,0 +1,65 @@
+# Reference extraction (manually annotated) for design_fmea.md
+document: design_fmea.md
+entities:
+  - {type: Process, name: Design FMEA Process, description: "Systematic analysis of potential failure modes of new or changed designs."}
+  - {type: Activity, name: Define FMEA scope and structure, description: "Set up the system structure from the bill of materials.", evidence: "sets up the system structure from the Bill of Materials in the FMEA software"}
+  - {type: Activity, name: Function and failure analysis, description: "Workshop to derive functions, failure modes, effects and causes.", evidence: "derive functions, failure modes, effects and causes"}
+  - {type: Activity, name: FMEA risk assessment, description: "Rate severity, occurrence and detection and compute the action priority.", evidence: "The team rates severity, occurrence and detection"}
+  - {type: Activity, name: Define and track FMEA actions, description: "Define actions for high action priority and track them until closed.", evidence: "Actions are tracked in the Design FMEA until closed."}
+  - {type: Activity, name: Release Design FMEA, description: "Review and release of the Design FMEA.", evidence: "The quality engineer reviews and releases the Design FMEA."}
+  - {type: Role, name: FMEA Moderator, description: "Moderates FMEA workshops and maintains the FMEA structure."}
+  - {type: Role, name: Design Engineer, description: "Engineer responsible for the design of a component."}
+  - {type: Role, name: Quality Engineer, description: "Reviews and releases quality documents."}
+  - {type: Artifact, name: Bill of Materials, description: "Structured list of all parts of a product."}
+  - {type: Artifact, name: Structure Analysis, description: "System structure that the FMEA is built on."}
+  - {type: Artifact, name: Design FMEA, description: "Failure mode and effects analysis of the design."}
+  - {type: Artifact, name: Simulation Report, description: "Report with the results of a virtual validation."}
+  - {type: Artifact, name: Test Report, description: "Report with the results of a physical test."}
+  - {type: Tool, name: FMEA software, description: "Software for creating and managing FMEAs."}
+  - type: Requirement
+    name: Reuse lessons learned from previous FMEAs
+    description: Lessons learned from previous FMEAs and field failures should be reused but are spread over hundreds of files and hard to find.
+    evidence: "these are spread over hundreds of FMEA files and are hard to find"
+    need_type: information_retrieval
+    effort_hours_per_month: 90
+  - type: Requirement
+    name: Derive failure modes and causes
+    description: Teams derive candidate failure modes, effects and causes for each function in workshops.
+    evidence: "derive functions, failure modes, effects and causes"
+    need_type: authoring
+    effort_hours_per_month: 70
+  - type: Requirement
+    name: Track open FMEA actions
+    description: Tracking of FMEA actions is manual and open actions are often forgotten.
+    evidence: "Tracking is manual and open actions are often forgotten."
+    need_type: monitoring
+    effort_hours_per_month: 35
+relations:
+  - {source: Design FMEA Process, type: HAS_ACTIVITY, target: Define FMEA scope and structure}
+  - {source: Design FMEA Process, type: HAS_ACTIVITY, target: Function and failure analysis}
+  - {source: Design FMEA Process, type: HAS_ACTIVITY, target: FMEA risk assessment}
+  - {source: Design FMEA Process, type: HAS_ACTIVITY, target: Define and track FMEA actions}
+  - {source: Design FMEA Process, type: HAS_ACTIVITY, target: Release Design FMEA}
+  - {source: Define FMEA scope and structure, type: PRECEDES, target: Function and failure analysis}
+  - {source: Function and failure analysis, type: PRECEDES, target: FMEA risk assessment}
+  - {source: FMEA risk assessment, type: PRECEDES, target: Define and track FMEA actions}
+  - {source: Define and track FMEA actions, type: PRECEDES, target: Release Design FMEA}
+  - {source: Define FMEA scope and structure, type: PERFORMED_BY, target: FMEA Moderator}
+  - {source: Function and failure analysis, type: PERFORMED_BY, target: Design Engineer}
+  - {source: Function and failure analysis, type: PERFORMED_BY, target: FMEA Moderator}
+  - {source: FMEA risk assessment, type: PERFORMED_BY, target: Design Engineer}
+  - {source: FMEA risk assessment, type: PERFORMED_BY, target: FMEA Moderator}
+  - {source: Define and track FMEA actions, type: PERFORMED_BY, target: Design Engineer}
+  - {source: Release Design FMEA, type: PERFORMED_BY, target: Quality Engineer}
+  - {source: Define FMEA scope and structure, type: USES, target: Bill of Materials}
+  - {source: Define FMEA scope and structure, type: PRODUCES, target: Structure Analysis}
+  - {source: Define FMEA scope and structure, type: SUPPORTED_BY, target: FMEA software}
+  - {source: Function and failure analysis, type: USES, target: Structure Analysis}
+  - {source: FMEA risk assessment, type: USES, target: Simulation Report}
+  - {source: FMEA risk assessment, type: USES, target: Test Report}
+  - {source: Define and track FMEA actions, type: PRODUCES, target: Design FMEA}
+  - {source: Release Design FMEA, type: USES, target: Design FMEA}
+  - {source: Design FMEA, type: STORED_IN, target: FMEA software}
+  - {source: Function and failure analysis, type: HAS_REQUIREMENT, target: Reuse lessons learned from previous FMEAs}
+  - {source: Function and failure analysis, type: HAS_REQUIREMENT, target: Derive failure modes and causes}
+  - {source: Define and track FMEA actions, type: HAS_REQUIREMENT, target: Track open FMEA actions}

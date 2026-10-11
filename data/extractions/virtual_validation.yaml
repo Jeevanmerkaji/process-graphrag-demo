@@ -1,0 +1,91 @@
+# Reference extraction (manually annotated) for virtual_validation.md
+document: virtual_validation.md
+entities:
+  - {type: Process, name: Virtual Validation, description: "Validation of designs by computer-aided engineering (CAE) simulation."}
+  - {type: Activity, name: Define load cases, description: "Define the load cases for the simulation from requirements and geometry.", evidence: "| Define load cases | Simulation Engineer |"}
+  - {type: Activity, name: Prepare simulation model, description: "Prepare and mesh the simulation model from the CAD model.", evidence: "| Prepare simulation model | Simulation Engineer |"}
+  - {type: Activity, name: Run simulation, description: "Solve the simulation model for the defined load cases.", evidence: "| Run simulation | Simulation Engineer |"}
+  - {type: Activity, name: Evaluate and report simulation, description: "Evaluate simulation results and write the simulation report.", evidence: "| Evaluate and report | Simulation Engineer |"}
+  - {type: Activity, name: Correlate simulation with test, description: "Compare simulation results with physical test results.", evidence: "| Correlate with test | Simulation Engineer, Test Engineer |"}
+  - {type: Role, name: Simulation Engineer, description: "Engineer who performs CAE simulations."}
+  - {type: Role, name: Test Engineer, description: "Engineer who plans, runs and evaluates physical tests."}
+  - {type: Artifact, name: Requirements Specification, description: "Technical requirements for the component or vehicle."}
+  - {type: Artifact, name: CAD Model, description: "3D geometry of the component."}
+  - {type: Artifact, name: Load Case Definition, description: "Definition of loads and boundary conditions for the simulation."}
+  - {type: Artifact, name: Simulation Model, description: "Meshed model prepared for the solver."}
+  - {type: Artifact, name: Simulation Results, description: "Raw solver results."}
+  - {type: Artifact, name: Simulation Report, description: "Report with the results of a virtual validation."}
+  - {type: Artifact, name: Test Report, description: "Report with the results of a physical test."}
+  - {type: Artifact, name: Correlation Report, description: "Comparison of simulation and test results."}
+  - {type: Tool, name: Requirements management tool, description: "System for managing requirements."}
+  - {type: Tool, name: CAE pre-processor, description: "Software for geometry preparation and meshing."}
+  - {type: Tool, name: HPC cluster, description: "High-performance computing cluster running the CAE solver."}
+  - {type: Tool, name: CAE post-processor, description: "Software for evaluating simulation results."}
+  - type: Requirement
+    name: Reuse existing load case definitions
+    description: Load cases are re-defined from scratch for each project because existing definitions are hard to find.
+    evidence: "Load cases are re-defined from scratch for each project; existing definitions are hard to find"
+    need_type: information_retrieval
+    effort_hours_per_month: 50
+  - type: Requirement
+    name: Reduce meshing effort
+    description: Meshing the simulation model takes about 40% of the total simulation effort.
+    evidence: "Meshing takes about 40% of the total simulation effort"
+    need_type: analysis
+    effort_hours_per_month: 200
+  - type: Requirement
+    name: Evaluate more design variants
+    description: Long solver run times limit the number of design variants that can be simulated.
+    evidence: "Long solver run times limit the number of design variants"
+    need_type: analysis
+    effort_hours_per_month: 80
+  - type: Requirement
+    name: Draft simulation reports
+    description: Simulation reports are written manually and comparison with earlier variants is tedious.
+    evidence: "Reports are written manually; comparison with earlier variants is tedious"
+    need_type: authoring
+    effort_hours_per_month: 60
+  - type: Requirement
+    name: Link test and simulation data
+    description: Test and simulation data are stored in different systems, which makes correlation difficult.
+    evidence: "Test and simulation data are stored in different systems"
+    need_type: consolidation
+    effort_hours_per_month: 25
+relations:
+  - {source: Virtual Validation, type: HAS_ACTIVITY, target: Define load cases}
+  - {source: Virtual Validation, type: HAS_ACTIVITY, target: Prepare simulation model}
+  - {source: Virtual Validation, type: HAS_ACTIVITY, target: Run simulation}
+  - {source: Virtual Validation, type: HAS_ACTIVITY, target: Evaluate and report simulation}
+  - {source: Virtual Validation, type: HAS_ACTIVITY, target: Correlate simulation with test}
+  - {source: Define load cases, type: PRECEDES, target: Prepare simulation model}
+  - {source: Prepare simulation model, type: PRECEDES, target: Run simulation}
+  - {source: Run simulation, type: PRECEDES, target: Evaluate and report simulation}
+  - {source: Evaluate and report simulation, type: PRECEDES, target: Correlate simulation with test}
+  - {source: Define load cases, type: PERFORMED_BY, target: Simulation Engineer}
+  - {source: Prepare simulation model, type: PERFORMED_BY, target: Simulation Engineer}
+  - {source: Run simulation, type: PERFORMED_BY, target: Simulation Engineer}
+  - {source: Evaluate and report simulation, type: PERFORMED_BY, target: Simulation Engineer}
+  - {source: Correlate simulation with test, type: PERFORMED_BY, target: Simulation Engineer}
+  - {source: Correlate simulation with test, type: PERFORMED_BY, target: Test Engineer}
+  - {source: Define load cases, type: USES, target: Requirements Specification}
+  - {source: Define load cases, type: USES, target: CAD Model}
+  - {source: Define load cases, type: PRODUCES, target: Load Case Definition}
+  - {source: Define load cases, type: SUPPORTED_BY, target: Requirements management tool}
+  - {source: Prepare simulation model, type: USES, target: CAD Model}
+  - {source: Prepare simulation model, type: PRODUCES, target: Simulation Model}
+  - {source: Prepare simulation model, type: SUPPORTED_BY, target: CAE pre-processor}
+  - {source: Run simulation, type: USES, target: Simulation Model}
+  - {source: Run simulation, type: USES, target: Load Case Definition}
+  - {source: Run simulation, type: PRODUCES, target: Simulation Results}
+  - {source: Run simulation, type: SUPPORTED_BY, target: HPC cluster}
+  - {source: Evaluate and report simulation, type: USES, target: Simulation Results}
+  - {source: Evaluate and report simulation, type: PRODUCES, target: Simulation Report}
+  - {source: Evaluate and report simulation, type: SUPPORTED_BY, target: CAE post-processor}
+  - {source: Correlate simulation with test, type: USES, target: Simulation Report}
+  - {source: Correlate simulation with test, type: USES, target: Test Report}
+  - {source: Correlate simulation with test, type: PRODUCES, target: Correlation Report}
+  - {source: Define load cases, type: HAS_REQUIREMENT, target: Reuse existing load case definitions}
+  - {source: Prepare simulation model, type: HAS_REQUIREMENT, target: Reduce meshing effort}
+  - {source: Run simulation, type: HAS_REQUIREMENT, target: Evaluate more design variants}
+  - {source: Evaluate and report simulation, type: HAS_REQUIREMENT, target: Draft simulation reports}
+  - {source: Correlate simulation with test, type: HAS_REQUIREMENT, target: Link test and simulation data}

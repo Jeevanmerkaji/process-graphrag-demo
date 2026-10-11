@@ -1,0 +1,61 @@
+# Reference extraction (manually annotated) for quality_gate_review.md
+document: quality_gate_review.md
+entities:
+  - {type: Process, name: Quality Gate Review, description: "Review of all deliverables at each major milestone of the product development process."}
+  - {type: Activity, name: Prepare gate review package, description: "Collect and consolidate the status of all deliverables for the gate.", evidence: "prepares the Gate Review Package"}
+  - {type: Activity, name: Evaluate gate criteria, description: "Evaluate deliverables against the gate criteria and decide pass, conditional pass or fail.", evidence: "evaluates the deliverables against the Gate Criteria Checklist"}
+  - {type: Activity, name: Follow up gate actions, description: "Follow up open actions from earlier gates.", evidence: "Open actions from earlier gates are not systematically followed up"}
+  - {type: Role, name: Project Manager, description: "Manages the development project and prepares gate reviews."}
+  - {type: Role, name: Gate Review Board, description: "Board of quality, engineering and project management that decides at each gate."}
+  - {type: Artifact, name: Gate Review Package, description: "Consolidated status of all deliverables for a gate."}
+  - {type: Artifact, name: Design FMEA, description: "Failure mode and effects analysis of the design."}
+  - {type: Artifact, name: Change Request, description: "Formal request for a change with affected parts, reason and impact estimate."}
+  - {type: Artifact, name: Simulation Report, description: "Report with the results of a virtual validation."}
+  - {type: Artifact, name: Test Report, description: "Report with the results of a physical test."}
+  - {type: Artifact, name: Gate Criteria Checklist, description: "Criteria that deliverables must meet at a gate."}
+  - {type: Artifact, name: Gate Protocol, description: "Documented gate decision and actions."}
+  - {type: Tool, name: PLM system, description: "Product lifecycle management system."}
+  - {type: Tool, name: FMEA software, description: "Software for creating and managing FMEAs."}
+  - {type: Tool, name: Test data management system, description: "System that stores test measurement data."}
+  - type: Requirement
+    name: Collect deliverable status across systems
+    description: Collecting the status of all deliverables takes two to three days per gate because the information is spread over several systems and e-mails.
+    evidence: "Collecting these deliverables takes two to three days per gate"
+    need_type: consolidation
+    effort_hours_per_month: 100
+  - type: Requirement
+    name: Apply gate criteria consistently
+    description: The gate criteria are interpreted differently between projects.
+    evidence: "the gate criteria are interpreted differently between projects"
+    need_type: compliance
+    effort_hours_per_month: 20
+  - type: Requirement
+    name: Follow up open gate actions
+    description: Open actions from earlier gates are not systematically followed up.
+    evidence: "Open actions from earlier gates are not systematically followed up"
+    need_type: monitoring
+    effort_hours_per_month: 25
+relations:
+  - {source: Quality Gate Review, type: HAS_ACTIVITY, target: Prepare gate review package}
+  - {source: Quality Gate Review, type: HAS_ACTIVITY, target: Evaluate gate criteria}
+  - {source: Quality Gate Review, type: HAS_ACTIVITY, target: Follow up gate actions}
+  - {source: Prepare gate review package, type: PRECEDES, target: Evaluate gate criteria}
+  - {source: Evaluate gate criteria, type: PRECEDES, target: Follow up gate actions}
+  - {source: Prepare gate review package, type: PERFORMED_BY, target: Project Manager}
+  - {source: Evaluate gate criteria, type: PERFORMED_BY, target: Gate Review Board}
+  - {source: Follow up gate actions, type: PERFORMED_BY, target: Project Manager}
+  - {source: Prepare gate review package, type: USES, target: Design FMEA}
+  - {source: Prepare gate review package, type: USES, target: Change Request}
+  - {source: Prepare gate review package, type: USES, target: Simulation Report}
+  - {source: Prepare gate review package, type: USES, target: Test Report}
+  - {source: Prepare gate review package, type: PRODUCES, target: Gate Review Package}
+  - {source: Prepare gate review package, type: SUPPORTED_BY, target: PLM system}
+  - {source: Prepare gate review package, type: SUPPORTED_BY, target: FMEA software}
+  - {source: Prepare gate review package, type: SUPPORTED_BY, target: Test data management system}
+  - {source: Evaluate gate criteria, type: USES, target: Gate Review Package}
+  - {source: Evaluate gate criteria, type: USES, target: Gate Criteria Checklist}
+  - {source: Evaluate gate criteria, type: PRODUCES, target: Gate Protocol}
+  - {source: Follow up gate actions, type: USES, target: Gate Protocol}
+  - {source: Prepare gate review package, type: HAS_REQUIREMENT, target: Collect deliverable status across systems}
+  - {source: Evaluate gate criteria, type: HAS_REQUIREMENT, target: Apply gate criteria consistently}
+  - {source: Follow up gate actions, type: HAS_REQUIREMENT, target: Follow up open gate actions}

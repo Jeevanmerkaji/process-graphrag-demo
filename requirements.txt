@@ -1,0 +1,9 @@
+networkx>=3.2
+scikit-learn>=1.3
+scipy
+pyyaml
+pydantic>=2
+matplotlib
+pytest
+# optional: only needed for LLM extraction and generated answers
+anthropic>=1.13

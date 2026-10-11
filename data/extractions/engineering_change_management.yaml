@@ -1,0 +1,89 @@
+# Reference extraction (manually annotated) for engineering_change_management.md
+document: engineering_change_management.md
+entities:
+  - {type: Process, name: Engineering Change Management, description: "Controls every modification to released parts, assemblies or software."}
+  - {type: Activity, name: Create change request, description: "The requester describes affected parts, reason and first cost and timing estimate.", evidence: "creates a Change Request in the PLM system"}
+  - {type: Activity, name: Perform impact analysis, description: "Identify affected parts and collect assessments from all departments.", evidence: "the change coordinator performs an impact analysis"}
+  - {type: Activity, name: Decide on change, description: "Weekly board decision on each change based on the impact assessment.", evidence: "The Change Control Board meets weekly and decides on each change"}
+  - {type: Activity, name: Update design and FMEA, description: "Update the CAD model and the Design FMEA for approved changes.", evidence: "update the CAD Model and the Design FMEA in the CAD system"}
+  - {type: Activity, name: Issue engineering change notice, description: "Inform production and suppliers about the approved change.", evidence: "issues an Engineering Change Notice to production and suppliers"}
+  - {type: Activity, name: Check homologation impact, description: "Decide whether the type approval must be updated.", evidence: "the homologation engineer checks the Engineering Change Notice"}
+  - {type: Role, name: Design Engineer, description: "Engineer responsible for the design of a component."}
+  - {type: Role, name: Change Coordinator, description: "Coordinates engineering changes across departments."}
+  - {type: Role, name: Change Control Board, description: "Board that approves or rejects engineering changes."}
+  - {type: Role, name: Homologation Engineer, description: "Responsible for type approval of the vehicle."}
+  - {type: Artifact, name: Change Request, description: "Formal request for a change with affected parts, reason and impact estimate."}
+  - {type: Artifact, name: Bill of Materials, description: "Structured list of all parts of a product."}
+  - {type: Artifact, name: Impact Assessment, description: "Form collecting the assessments of all affected departments."}
+  - {type: Artifact, name: CCB Decision Log, description: "Record of board decisions and their rationale."}
+  - {type: Artifact, name: CAD Model, description: "3D geometry of the component."}
+  - {type: Artifact, name: Design FMEA, description: "Failure mode and effects analysis of the design."}
+  - {type: Artifact, name: Engineering Change Notice, description: "Official notice of an approved change to production and suppliers."}
+  - {type: Tool, name: PLM system, description: "Product lifecycle management system."}
+  - {type: Tool, name: CAD system, description: "Computer-aided design software."}
+  - type: Requirement
+    name: Find earlier similar changes
+    description: Engineers need to find earlier changes to the same or similar parts and the reasons for past decisions, which are hidden in free-text attachments.
+    evidence: "engineers spend a lot of time searching the PLM system for earlier changes to the same or similar parts"
+    need_type: information_retrieval
+    effort_hours_per_month: 120
+  - type: Requirement
+    name: Consolidate department assessments
+    description: Assessments arrive by e-mail in different formats and must be consolidated manually into the impact assessment.
+    evidence: "assessments arrive by e-mail in different formats and have to be consolidated manually"
+    need_type: consolidation
+    effort_hours_per_month: 160
+  - type: Requirement
+    name: Identify affected parts
+    description: All parts affected by a change must be identified in the bill of materials.
+    evidence: "identifies all affected parts in the Bill of Materials"
+    need_type: analysis
+    effort_hours_per_month: 60
+  - type: Requirement
+    name: Prepare change summary for the board
+    description: Board members need a short summary of each change, currently written by hand before every meeting.
+    evidence: "Board members often ask for a short summary of the change"
+    need_type: authoring
+    effort_hours_per_month: 40
+  - type: Requirement
+    name: Judge homologation relevance
+    description: Deciding whether a component is homologation-relevant and the type approval must be updated is judged from experience only.
+    evidence: "Whether a component is homologation-relevant is currently judged from experience."
+    need_type: compliance
+    effort_hours_per_month: 30
+relations:
+  - {source: Engineering Change Management, type: HAS_ACTIVITY, target: Create change request}
+  - {source: Engineering Change Management, type: HAS_ACTIVITY, target: Perform impact analysis}
+  - {source: Engineering Change Management, type: HAS_ACTIVITY, target: Decide on change}
+  - {source: Engineering Change Management, type: HAS_ACTIVITY, target: Update design and FMEA}
+  - {source: Engineering Change Management, type: HAS_ACTIVITY, target: Issue engineering change notice}
+  - {source: Engineering Change Management, type: HAS_ACTIVITY, target: Check homologation impact}
+  - {source: Create change request, type: PRECEDES, target: Perform impact analysis}
+  - {source: Perform impact analysis, type: PRECEDES, target: Decide on change}
+  - {source: Decide on change, type: PRECEDES, target: Update design and FMEA}
+  - {source: Update design and FMEA, type: PRECEDES, target: Issue engineering change notice}
+  - {source: Issue engineering change notice, type: PRECEDES, target: Check homologation impact}
+  - {source: Create change request, type: PERFORMED_BY, target: Design Engineer}
+  - {source: Perform impact analysis, type: PERFORMED_BY, target: Change Coordinator}
+  - {source: Decide on change, type: PERFORMED_BY, target: Change Control Board}
+  - {source: Update design and FMEA, type: PERFORMED_BY, target: Design Engineer}
+  - {source: Issue engineering change notice, type: PERFORMED_BY, target: Change Coordinator}
+  - {source: Check homologation impact, type: PERFORMED_BY, target: Homologation Engineer}
+  - {source: Create change request, type: PRODUCES, target: Change Request}
+  - {source: Create change request, type: SUPPORTED_BY, target: PLM system}
+  - {source: Perform impact analysis, type: USES, target: Change Request}
+  - {source: Perform impact analysis, type: USES, target: Bill of Materials}
+  - {source: Perform impact analysis, type: PRODUCES, target: Impact Assessment}
+  - {source: Decide on change, type: USES, target: Impact Assessment}
+  - {source: Decide on change, type: PRODUCES, target: CCB Decision Log}
+  - {source: Update design and FMEA, type: PRODUCES, target: CAD Model}
+  - {source: Update design and FMEA, type: PRODUCES, target: Design FMEA}
+  - {source: Update design and FMEA, type: SUPPORTED_BY, target: CAD system}
+  - {source: Issue engineering change notice, type: PRODUCES, target: Engineering Change Notice}
+  - {source: Check homologation impact, type: USES, target: Engineering Change Notice}
+  - {source: Change Request, type: STORED_IN, target: PLM system}
+  - {source: Create change request, type: HAS_REQUIREMENT, target: Find earlier similar changes}
+  - {source: Perform impact analysis, type: HAS_REQUIREMENT, target: Consolidate department assessments}
+  - {source: Perform impact analysis, type: HAS_REQUIREMENT, target: Identify affected parts}
+  - {source: Decide on change, type: HAS_REQUIREMENT, target: Prepare change summary for the board}
+  - {source: Check homologation impact, type: HAS_REQUIREMENT, target: Judge homologation relevance}

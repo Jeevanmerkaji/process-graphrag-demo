@@ -1,0 +1,70 @@
+# Evaluation data
+#
+# questions: each lists `expected` facts that a good context must contain. Every
+# expected string appears verbatim (case-insensitive) in the source documents or
+# the capability taxonomy, so the text-chunk baseline can find it in principle
+# (checked by tests/test_data.py).
+#   single: the answer is in one document
+#   multi:  the answer needs facts from several documents
+#
+# capability_mapping: expert judgement of which AI capabilities fit each
+# requirement; [] means no AI capability is appropriate.
+
+questions:
+  - question: Who performs the impact analysis in engineering change management, and what does it use?
+    hops: single
+    expected: [Change Coordinator, Impact Assessment, Bill of Materials]
+  - question: Which system is used to run the simulation, and what are its inputs?
+    hops: single
+    expected: [HPC cluster, Simulation Model, Load Case Definition]
+  - question: Who releases the Design FMEA?
+    hops: single
+    expected: [Quality Engineer]
+  - question: What are the inputs for writing a test plan?
+    hops: single
+    expected: [Test Request, Requirements Specification]
+  - question: Who decides at a quality gate and what do they evaluate against?
+    hops: single
+    expected: [Gate Review Board, Gate Criteria Checklist, Gate Protocol]
+  - question: What happens when a prototype test fails, and which roles are involved afterwards?
+    hops: multi
+    expected: [Test Engineer, Design Engineer, Change Request, Change Coordinator, Change Control Board]
+  - question: Which activities in other processes depend on the Test Report?
+    hops: multi
+    expected: [Risk assessment, Gate Review Package, Correlation Report]
+  - question: Where do the deliverables in the gate review package come from, and who creates them?
+    hops: multi
+    expected: [Design FMEA, Simulation Report, Test Report, Simulation Engineer, Test Engineer]
+  - question: Which roles work with the bill of materials?
+    hops: multi
+    expected: [Change Coordinator, FMEA Moderator, Prototype Workshop]
+  - question: What problems does the simulation engineer face, and which AI capabilities could help?
+    hops: multi
+    expected: [Meshing, solver run times, Surrogate models, mesh preparation]
+  - question: Which AI capabilities could support the impact analysis of engineering changes?
+    hops: multi
+    expected: [Summarization and consolidation, Dependency and impact analysis]
+  - question: Where are open actions not followed up, and which AI capability could help?
+    hops: multi
+    expected: [often forgotten, earlier gates, Action tracking]
+
+capability_mapping:
+  Find earlier similar changes: [semantic_search]
+  Consolidate department assessments: [summarization, information_extraction]
+  Identify affected parts: [impact_analysis]
+  Prepare change summary for the board: [summarization, text_generation]
+  Judge homologation relevance: [compliance_checking]
+  Reuse lessons learned from previous FMEAs: [semantic_search]
+  Derive failure modes and causes: [generative_suggestion]
+  Track open FMEA actions: [action_tracking]
+  Reuse existing load case definitions: [semantic_search, generative_suggestion]
+  Reduce meshing effort: [geometry_preprocessing]
+  Evaluate more design variants: [surrogate_modeling]
+  Draft simulation reports: [text_generation]
+  Link test and simulation data: []
+  Reuse previous test plans: [semantic_search, text_generation]
+  Detect anomalies in measurement data: [anomaly_detection]
+  Draft test reports: [text_generation]
+  Collect deliverable status across systems: [summarization, information_extraction]
+  Apply gate criteria consistently: [compliance_checking]
+  Follow up open gate actions: [action_tracking]

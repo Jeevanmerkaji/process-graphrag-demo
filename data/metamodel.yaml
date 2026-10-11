@@ -1,0 +1,85 @@
+# Process knowledge metamodel
+#
+# This file is the single source of truth for what the knowledge graph may
+# contain. It is meant to be read by people (process owners, engineers) and by
+# programs (the extractor, the validator, the graph builder) alike.
+#
+# entity_types: the kinds of nodes in the graph; query_terms are words that signal
+#   a question asks for this type (used by the retriever)
+# relation_types: the kinds of edges, each with an allowed domain -> range
+
+version: 0.1
+
+entity_types:
+  Process:
+    description: A documented development process with an owner, e.g. "Engineering Change Management".
+    query_terms: [process, processes, procedure]
+  Activity:
+    description: A step within a process that someone performs.
+    query_terms: [activity, activities, step, steps, happens, task, tasks]
+  Role:
+    description: A person, team or board that performs or decides an activity.
+    query_terms: [who, role, roles, person, people, team, board, responsible, involved]
+  Artifact:
+    description: A document, data set, model or physical object that an activity uses or produces.
+    query_terms: [document, documents, input, inputs, output, outputs, deliverable, deliverables, report, data]
+  Tool:
+    description: An IT system or piece of equipment that supports an activity or stores an artifact.
+    query_terms: [system, systems, tool, tools, software, equipment]
+  Requirement:
+    description: >
+      A process requirement or pain point: an information need, manual effort or
+      quality problem that is stated or clearly implied in the documentation.
+      These are the candidates for AI support.
+    query_terms: [problem, problems, pain point, pain points, need, needs, requirement, requirements, issue, issues]
+    attributes:
+      need_type: one of information_retrieval, consolidation, authoring, analysis, monitoring, compliance
+      effort_hours_per_month: estimated effort spent on this need across the organisation (synthetic)
+  AICapability:
+    description: A generic class of AI functionality from the capability taxonomy (data/ai_capabilities.yaml).
+    query_terms: [ai, capability, capabilities, automate, automation]
+
+relation_types:
+  HAS_ACTIVITY:
+    domain: Process
+    range: Activity
+    description: The process contains this activity.
+  PRECEDES:
+    domain: Activity
+    range: Activity
+    description: The source activity is performed before the target activity.
+  PERFORMED_BY:
+    domain: Activity
+    range: Role
+    description: The role is responsible for the activity.
+  USES:
+    domain: Activity
+    range: Artifact
+    description: The activity needs this artifact as input.
+  PRODUCES:
+    domain: Activity
+    range: Artifact
+    description: The activity creates or updates this artifact.
+  SUPPORTED_BY:
+    domain: Activity
+    range: Tool
+    description: The activity is carried out with this tool.
+  STORED_IN:
+    domain: Artifact
+    range: Tool
+    description: The artifact is kept in this system.
+  HAS_REQUIREMENT:
+    domain: Activity
+    range: Requirement
+    description: The activity has this requirement or pain point.
+  TRIGGERS:
+    domain: Activity
+    range: Process
+    description: The activity can start another process.
+  ADDRESSED_BY:
+    domain: Requirement
+    range: AICapability
+    description: >
+      Derived, not extracted: the requirement could be supported by this AI
+      capability. Created by the capability matcher with a similarity score.
+    derived: true

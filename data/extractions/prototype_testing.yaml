@@ -1,0 +1,72 @@
+# Reference extraction (manually annotated) for prototype_testing.md
+document: prototype_testing.md
+entities:
+  - {type: Process, name: Prototype Testing, description: "Physical testing of prototype vehicles and components."}
+  - {type: Process, name: Engineering Change Management, description: "Controls every modification to released parts, assemblies or software."}
+  - {type: Activity, name: Plan test, description: "Write the test plan with tests, prototype and measurement equipment.", evidence: "I then write the Test Plan"}
+  - {type: Activity, name: Build prototype, description: "Build the prototype vehicle from the bill of materials.", evidence: "The prototype workshop builds the Prototype Vehicle based on the Bill of Materials."}
+  - {type: Activity, name: Execute test, description: "Run the tests on the test rig or proving ground.", evidence: "we run the tests on the test rig or on the proving ground"}
+  - {type: Activity, name: Analyse test data and report, description: "Analyse measurement data and write the test report.", evidence: "I analyse the Measurement Data and write the Test Report."}
+  - {type: Activity, name: Report test failure, description: "Report a failed test to the design engineer, who opens a change request.", evidence: "I report the failure to the design engineer and they open a change request"}
+  - {type: Role, name: Test Engineer, description: "Engineer who plans, runs and evaluates physical tests."}
+  - {type: Role, name: Design Engineer, description: "Engineer responsible for the design of a component."}
+  - {type: Role, name: Prototype Workshop, description: "Workshop that builds prototype vehicles."}
+  - {type: Artifact, name: Test Request, description: "Request from design to test a component, usually sent by e-mail."}
+  - {type: Artifact, name: Requirements Specification, description: "Technical requirements for the component or vehicle."}
+  - {type: Artifact, name: Test Plan, description: "Plan of tests, prototypes and measurement equipment."}
+  - {type: Artifact, name: Bill of Materials, description: "Structured list of all parts of a product."}
+  - {type: Artifact, name: Prototype Vehicle, description: "Physical prototype used for testing."}
+  - {type: Artifact, name: Measurement Data, description: "Channel data recorded during the tests."}
+  - {type: Artifact, name: Test Report, description: "Report with the results of a physical test."}
+  - {type: Tool, name: Test rig, description: "Test bench for physical tests."}
+  - {type: Tool, name: Test data management system, description: "System that stores test measurement data."}
+  - type: Requirement
+    name: Reuse previous test plans
+    description: Half of each test plan is copy-paste from earlier campaigns, if they can be found at all.
+    evidence: "half of the test plan is copy-paste from earlier campaigns, if I can find them"
+    need_type: information_retrieval
+    effort_hours_per_month: 45
+  - type: Requirement
+    name: Detect anomalies in measurement data
+    description: Gigabytes of channel data are searched for anomalies more or less by eye.
+    evidence: "I look for anomalies more or less by eye"
+    need_type: analysis
+    effort_hours_per_month: 150
+  - type: Requirement
+    name: Draft test reports
+    description: Writing the test report after each campaign takes a long time.
+    evidence: "write the Test Report. That takes long."
+    need_type: authoring
+    effort_hours_per_month: 70
+relations:
+  - {source: Prototype Testing, type: HAS_ACTIVITY, target: Plan test}
+  - {source: Prototype Testing, type: HAS_ACTIVITY, target: Build prototype}
+  - {source: Prototype Testing, type: HAS_ACTIVITY, target: Execute test}
+  - {source: Prototype Testing, type: HAS_ACTIVITY, target: Analyse test data and report}
+  - {source: Prototype Testing, type: HAS_ACTIVITY, target: Report test failure}
+  - {source: Plan test, type: PRECEDES, target: Build prototype}
+  - {source: Build prototype, type: PRECEDES, target: Execute test}
+  - {source: Execute test, type: PRECEDES, target: Analyse test data and report}
+  - {source: Analyse test data and report, type: PRECEDES, target: Report test failure}
+  - {source: Plan test, type: PERFORMED_BY, target: Test Engineer}
+  - {source: Build prototype, type: PERFORMED_BY, target: Prototype Workshop}
+  - {source: Execute test, type: PERFORMED_BY, target: Test Engineer}
+  - {source: Analyse test data and report, type: PERFORMED_BY, target: Test Engineer}
+  - {source: Report test failure, type: PERFORMED_BY, target: Test Engineer}
+  - {source: Plan test, type: USES, target: Test Request}
+  - {source: Plan test, type: USES, target: Requirements Specification}
+  - {source: Plan test, type: PRODUCES, target: Test Plan}
+  - {source: Build prototype, type: USES, target: Bill of Materials}
+  - {source: Build prototype, type: PRODUCES, target: Prototype Vehicle}
+  - {source: Execute test, type: USES, target: Test Plan}
+  - {source: Execute test, type: USES, target: Prototype Vehicle}
+  - {source: Execute test, type: PRODUCES, target: Measurement Data}
+  - {source: Execute test, type: SUPPORTED_BY, target: Test rig}
+  - {source: Analyse test data and report, type: USES, target: Measurement Data}
+  - {source: Analyse test data and report, type: PRODUCES, target: Test Report}
+  - {source: Report test failure, type: USES, target: Test Report}
+  - {source: Report test failure, type: TRIGGERS, target: Engineering Change Management}
+  - {source: Measurement Data, type: STORED_IN, target: Test data management system}
+  - {source: Plan test, type: HAS_REQUIREMENT, target: Reuse previous test plans}
+  - {source: Analyse test data and report, type: HAS_REQUIREMENT, target: Detect anomalies in measurement data}
+  - {source: Analyse test data and report, type: HAS_REQUIREMENT, target: Draft test reports}
